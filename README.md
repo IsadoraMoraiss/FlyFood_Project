@@ -1,2 +1,2 @@
-#  FlyFood Project 
-Desenvolvido por estudantes da 
+# 🛩️FlyFood
+O projeto FlyFood tem como objetivo otimizar entregas de alimeitos por meio de drones que sobrevoam a cidade seguindo a rota de menor distância até o destino, sendo a cidade representada por uma matriz em que o drone não sobrevoa pela diagonal.  
