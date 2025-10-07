@@ -10,3 +10,6 @@ Problematização
 O intenso crescimento urbano,
 sem o devido planejamento, acarreta no congestionamento das ruas e o intenso tráfego nas grandes cidades. 
 A crescente demanda de serviços de entrega e as exigências dos clientes em entregas cada vez mais rápidas, pressionam as empresas a procurarem alternativas para minimizar os custos no menor tempo possível. A partir dessa necessidade, o FlyFood entra em cena como uma proposta rápida, eficiente e sustentável que supera os desafios de trajetos nos centros urbanos.
+
+Tecnologias Utilizadas ⚙️
+-------------------------
