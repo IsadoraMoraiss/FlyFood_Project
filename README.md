@@ -13,7 +13,5 @@ A crescente demanda de serviços de entrega e as exigências dos clientes em ent
 
 Tecnologias Utilizadas ⚙️
 -------------------------
-''' 
 VsCode - IDE 
 Python 3 
-'''
