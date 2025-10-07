@@ -77,7 +77,7 @@ def rota_otima():
             custo += calcular_distancia(ponto_atual, proximo_ponto)
             ponto_atual = proximo_ponto
 
-        # ✅ adiciona o retorno ao ponto R no final
+        # adiciona o retorno ao ponto R no final
         custo += calcular_distancia(ponto_atual, ponto_inicial)
 
         if custo < distancia_minima:
