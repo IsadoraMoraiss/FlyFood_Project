@@ -62,7 +62,7 @@ def rota_otima():
         return "Ponto R não encontrado"
 
     ponto_inicial = pontos['R']
-    destinos = sorted([p for p in pontos.keys() if p != 'R'])  # ✅ ordena os destinos
+    destinos = sorted([p for p in pontos.keys() if p != 'R'])  # ordena os destinos
 
     permutacoes = gerar_permutacoes(destinos)
 
@@ -90,6 +90,7 @@ def rota_otima():
 
 def timer():
     return time.time()
+
 
 if __name__ == "__main__":
     inicio = timer()
