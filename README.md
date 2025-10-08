@@ -14,8 +14,7 @@ A crescente demanda de serviços de entrega e as exigências dos clientes em ent
 Tecnologias Utilizadas ⚙️ <h3>
 -------------------------
 ```
-<img width="2500" height="2455" alt="pngwing com" src="https://github.com/user-attachments/assets/5ded3202-1f78-466e-be1d-387b25a62149" /> VsCode - IDE <br> 
-
-Python 3 <br>
+VsCode - IDE 
+Python 3 
 
 ```
