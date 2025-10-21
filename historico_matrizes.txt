@@ -66,3 +66,74 @@ R 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 H 0 0
 0 0 0 0 0 0 0 0 0 I 0
 0 0 0 0 0 0 0 0 0 0 J
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+---
+4 5
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+R 0 0 0 0
+---
+4 5
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+R 0 0 0 0
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0Rota ótima: A → D → C → B
+Distância mínima: 14
+Tempo de execução: 0.000066 segundos
+
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+ ----- 
+Rota ótima: A → D → C → B
+Distância mínima: 14
+Tempo de execução: 0.000085 segundos
+
+---
+5 5
+0 0 0 E 0
+0 A 0 0 0
+R 0 0 B 0
+0 0 C 0 0
+0 0 0 0 Dinfos: 
+Rota ótima: A → E → B → D → C
+Distância mínima: 16
+Tempo de execução: 0.000159 segundos
+
+  
+Rota ótima: A → E → B → Dinfos: → C
+Distância mínima: 16
+Tempo de execução: 0.000137 segundos
+
+---
+5 5
+0 0 0 E 0
+0 A 0 0 0
+R 0 0 B 0
+0 0 C 0 0
+0 0 0 0 D
+  
+Rota ótima: A → E → B → D → C
+Distância mínima: 16
+Tempo de execução: 0.000218 segundos

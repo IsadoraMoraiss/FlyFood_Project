@@ -108,13 +108,22 @@ def main():
     inicio = time.time()
     rota, distancia = calcular_rota_otima(matriz)
     fim = time.time()
+    tempo_execucao = fim - inicio
+    
 
     if rota:
         print("\nrota ótima:", ' '.join(rota))
         print("Distância Dronômetros:", distancia)
+        print(f"Tempo de execução: {tempo_execucao:.6f} segundos")
+        # Salva não só as matrizes colocadas como também a melhor rota, distância e tempo que levou para calcular 
+        with open(Matrizes, "a", encoding="utf-8") as f:
+            f.write(f"\n  \n")
+            f.write(f"Rota ótima: {' → '.join(rota)}\n")
+            f.write(f"Distância mínima: {distancia}\n")
+            f.write(f"Tempo de execução: {tempo_execucao:.6f} segundos\n")
     else:
         print("\nNenhuma rota encontrada.")
-    print(f"Tempo de execução: {fim - inicio:.6f} segundos")
+    
 
 
 if __name__ == "__main__":
