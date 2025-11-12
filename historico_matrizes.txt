@@ -137,3 +137,76 @@ R 0 0 B 0
 Rota ótima: A → E → B → D → C
 Distância mínima: 16
 Tempo de execução: 0.000218 segundos
+
+---
+11 11
+R 0 0 0 0 0 0 0 0 0 0
+0 A 0 0 0 0 0 0 0 0 0
+0 0 B 0 0 0 0 0 0 0 0
+0 0 0 C 0 0 0 0 0 0 0
+0 0 0 0 D 0 0 0 0 0 0
+0 0 0 0 0 E 0 0 0 0 0
+0 0 0 0 0 0 F 0 0 0 0
+0 0 0 0 0 0 0 G 0 0 0
+0 0 0 0 0 0 0 0 H 0 0
+0 0 0 0 0 0 0 0 0 I 0
+0 0 0 0 0 0 0 0 0 0 J
+  
+Rota ótima: A → B → C → D → E → F → G → H → I → J
+Distância mínima: 40
+Tempo de execução: 5.909136 segundos
+
+---
+6 6
+0 0 A 0 0 0
+0 B 0 0 0 C
+0 0 0 0 0 0
+0 0 D 0 0 0
+0 0 0 E 0 F
+0 0 G 0 H 0
+  
+Rota ótima: p → o → n → t → o →   → i → n → i → c → i → a → l →   → ' → R → ' →   → n → ã → o →   → e → n → c → o → n → t → r → a → d → o → .
+Distância mínima: 0
+Tempo de execução: 0.000016 segundos
+
+---
+6 6
+0 0 A 0 0 0
+0 B 0 0 0 C
+0 0 0 R 0 0
+0 0 D 0 0 0
+0 0 0 E 0 F
+0 0 G 0 H 0
+  
+Rota ótima: A → B → C → F → E → H → G → D
+Distância mínima: 22
+Tempo de execução: 0.054719 segundos
+
+---
+7 7
+0 0 A 0 0 0 0
+0 0 0 0 B 0 0
+C 0 0 0 0 0 D
+0 0 0 R 0 0 0
+0 E 0 0 0 F 0
+0 0 0 G 0 0 0
+H 0 0 0 0 0 I
+  
+Rota ótima: E → H → C → A → B → D → F → I → G
+Distância mínima: 32
+Tempo de execução: 0.654453 segundos
+
+---
+8 8
+R 0 A 0 0 0 0 0
+0 0 0 B 0 0 0 0
+0 C 0 0 0 0 D 0
+0 0 0 0 0 0 0 0
+0 0 E 0 0 F 0 0
+0 G 0 0 0 0 H 0
+0 0 0 I 0 0 0 0
+J 0 0 0 K 0 L 0
+  
+Rota ótima: A → B → D → F → H → L → K → I → J → G → E → C
+Distância mínima: 34
+Tempo de execução: 883.535714 segundos
