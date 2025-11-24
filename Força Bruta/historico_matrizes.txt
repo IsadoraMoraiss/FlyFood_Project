@@ -210,3 +210,10 @@ J 0 0 0 K 0 L 0
 Rota ótima: A → B → D → F → H → L → K → I → J → G → E → C
 Distância mínima: 34
 Tempo de execução: 883.535714 segundos
+
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
