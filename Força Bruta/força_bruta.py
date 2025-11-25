@@ -80,11 +80,9 @@ def calcular_rota_otima(matriz):
         if custo_total < distancia_minima:
             distancia_minima = custo_total
             melhor_rota = rota
-
-    if melhor_rota:
-        return melhor_rota, distancia_minima
-    else:
-        return [], 0
+    if melhor_rota is None:
+        melhor_rota = []
+    return list(melhor_rota), distancia_minima, ponto_inicial, pontos, matriz
 
 # adicionando geração de gráfico para as rotas(melhoria p/2VA)
 import matplotlib.pyplot as plt

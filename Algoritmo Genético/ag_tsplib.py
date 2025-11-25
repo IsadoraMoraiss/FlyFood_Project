@@ -1,4 +1,3 @@
-import math
 import random
 import time
 import os
@@ -8,27 +7,39 @@ import os
 def ler_tsplib(arquivo):
     with open(arquivo, 'r') as f:
         linhas = f.readlines()
-
-    coords = []
+    
+    n = None
     start = False
+    valores = []
+
     for linha in linhas:
-        if "NODE_COORD_SECTION" in linha:
+        linha = linha.strip()
+
+        if linha.startswith("DIMENSION"):
+            n = int(linha.split(":")[1])
+
+        if linha.startswith("EDGE_WEIGHT_SECTION"):
             start = True
             continue
-        if "EOF" in linha:
-            break
+        
         if start:
-            partes = linha.strip().split()
-            if len(partes) >= 3:
-                x, y = float(partes[1]), float(partes[2])
-                coords.append((x, y))
-    return coords
-
-
-
-# Calcula a distância euclidiana entre duas cidades
-def distancia_euclidiana(p1, p2):
-    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
+            if linha == "EOF":
+                break
+            partes = linha.split()
+            valores.extend([float(x) for x in partes])
+    
+    if n is None:
+        raise ValueError("DIMENSION não encontrada no arquivo Tsplib")
+    
+    matriz = [[0.0 for _ in range(n)]for _ in range(n)]
+    idx = 0 
+    for i in range(n-1):
+        for j in range(i+1,n):
+            matriz[i][j] = valores[idx]
+            matriz[j][i] = valores[idx]
+            idx += 1 
+    
+    return matriz
 
 
 # Cria a população inicial com rotas aleatórias
@@ -63,15 +74,19 @@ def selecao(pontuacoes, k=5):
 
 def cruzamento(pai1, pai2):# Cruzamento (Ordered Crossover - OX)
     a, b = sorted(random.sample(range(len(pai1)), 2))
-    filho = [None]*len(pai1)
+    filho = [None] * len(pai1)
+    # copia o segmento do pai1
     filho[a:b] = pai1[a:b]
+
+    #completa com pai2
     ptr = b
     for cidade in pai2:
         if cidade not in filho:
-            if ptr >= len(pai1):
+            if ptr >= len(filho):
                 ptr = 0
             filho[ptr] = cidade
             ptr += 1
+
     return filho
 
 
@@ -86,10 +101,8 @@ def mutacao(individuo, taxa=0.02):
 
 
 
-def algoritmo_genetico(coords, tamanho_pop=100, geracoes=300):
-    n = len(coords)
-    distancias = [[distancia_euclidiana(coords[i], coords[j]) for j in range(n)] for i in range(n)]
-
+def algoritmo_genetico(distancias, tamanho_pop=100, geracoes=300):
+    n = len(distancias)
     populacao = criar_populacao(n, tamanho_pop)
 
     for _ in range(geracoes):
@@ -109,14 +122,15 @@ def algoritmo_genetico(coords, tamanho_pop=100, geracoes=300):
 
 def main():
     arquivo = "brazil58.tsp"
+
     if not os.path.exists(arquivo):
         raise FileNotFoundError(f"Arquivo '{arquivo}' não encontrado!")
 
     print("➡️ Executando algoritmo genético com o arquivo 'brazil58.tsp'...")
-    coords = ler_tsplib(arquivo)
+    distancias = ler_tsplib(arquivo)
 
     inicio = time.time()
-    rota, distancia = algoritmo_genetico(coords, tamanho_pop=150, geracoes=400)
+    rota, distancia = algoritmo_genetico(distancias, tamanho_pop=150, geracoes=400)
     fim = time.time()
 
     print("\nMelhor rota encontrada:", rota)
