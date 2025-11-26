@@ -114,7 +114,12 @@ def algoritmo_genetico(distancias, tamanho_pop=100, geracoes=300):
             filho = cruzamento(pai1, pai2)
             mutacao(filho)
             nova_pop.append(filho)
-        populacao = nova_pop
+        populacao += nova_pop
+        #criar uma nova populacao de sobreviventes
+        #transferir o melhor indivduo para ela
+        #transferir o restante (tamanho_pop-1) usando o torneio
+        #lembrete: apagar o individuo da populacao original apos transferi-lo
+
 
     melhor = min(populacao, key=lambda ind: calcular_distancia_total(ind, distancias))
     return melhor, calcular_distancia_total(melhor, distancias)
@@ -126,7 +131,7 @@ def main():
     if not os.path.exists(arquivo):
         raise FileNotFoundError(f"Arquivo '{arquivo}' não encontrado!")
 
-    print("➡️ Executando algoritmo genético com o arquivo 'brazil58.tsp'...")
+    print(f"Executando algoritmo genético com o arquivo {arquivo}...")
     distancias = ler_tsplib(arquivo)
 
     inicio = time.time()

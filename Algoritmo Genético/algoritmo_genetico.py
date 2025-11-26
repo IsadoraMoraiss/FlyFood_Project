@@ -129,6 +129,7 @@ def avaliacao(individuo: List[str], inicio: Tuple[int, int], pontos: Dict[str, T
         atual = pontos[p]
 
     custo_total += manhattan(atual, inicio)
+    #custo_total = 100/custo_total
     return -custo_total
 
 
@@ -225,18 +226,48 @@ def executar_ag(matriz_txt: str, tamanho_populacao: int, numero_geracoes: int, e
 
 
 def plotar_rota_ag(rota: List[str], inicio: Tuple[int, int], pontos: Dict[str, Tuple[int, int]], matriz: List[List[str]]):
+    # validações básicas
+    n_linhas = len(matriz)
+    if n_linhas == 0:
+        raise ValueError("Matriz vazia.")
+    # altura por linha (permite linhas com comprimentos diferentes)
+    max_colunas = max(len(l) for l in matriz)
+
+    # valida inicio
+    ir, ic = inicio
+    if ir < 0 or ir >= n_linhas or ic < 0 or ic >= len(matriz[ir]):
+        raise IndexError(f"Ponto inicial 'inicio' fora da matriz: {inicio} (matriz {n_linhas}x{len(matriz[ir])})")
+
+    # valida pontos da rota
+    for rotulo, coord in pontos.items():
+        pr, pc = coord
+        if pr < 0 or pr >= n_linhas or pc < 0 or pc >= len(matriz[pr]):
+            raise IndexError(f"Ponto de entrega '{rotulo}' com coordenada inválida: {coord}")
+
     plt.figure(figsize=(8, 8))
     plt.title("Rota Encontrada")
 
+    # desenha os pontos existentes, linha por linha (cada linha com seu comprimento)
     for r in range(len(matriz)):
-        for c in range(len(matriz[0])):
-            plt.scatter(c, -r, color='lightgray')
+        for c in range(len(matriz[r])):   # <-- itera por comprimento da linha atual
+            plt.scatter(c, -r)
             valor = matriz[r][c]
             if valor != '0':
                 plt.text(c, -r, valor, fontsize=8, ha='center', va='center')
 
-    caminho = [inicio] + [pontos[p] for p in rota] + [inicio]
+    # cria caminho com as coordenadas (inicio -> entregas -> inicio)
+    try:
+        caminho = [inicio] + [pontos[p] for p in rota] + [inicio]
+    except KeyError as e:
+        raise KeyError(f"Rótulo na rota não encontrado em pontos: {e}. Rota: {rota}")
 
+    # valida novamente que todos os pontos do caminho cabem na matriz (defensivo)
+    for p in caminho:
+        r, c = p
+        if r < 0 or r >= n_linhas or c < 0 or c >= len(matriz[r]):
+            raise IndexError(f"Ponto do caminho fora da matriz: {p}")
+
+    # desenha linhas Manhattan entre pontos
     for i in range(len(caminho) - 1):
         p0 = caminho[i]
         p1 = caminho[i + 1]
@@ -245,16 +276,17 @@ def plotar_rota_ag(rota: List[str], inicio: Tuple[int, int], pontos: Dict[str, T
         x1, y1 = p1[1], -p1[0]
 
         inter_x, inter_y = x1, y0
-        plt.plot([x0, inter_x], [y0, inter_y], 'b-')
-        plt.plot([inter_x, x1], [inter_y, y1], 'b-')
+        plt.plot([x0, inter_x], [y0, inter_y], '-')   # sem cor específica
+        plt.plot([inter_x, x1], [inter_y, y1], '-')
 
         dist = manhattan(p0, p1)
-        plt.text((x0+x1)/2, (y0+y1)/2, f"{dist}", fontsize=8)
+        plt.text((x0 + x1) / 2, (y0 + y1) / 2, f"{dist}", fontsize=8)
 
-    plt.scatter(inicio[1], -inicio[0], c='red')
+    plt.scatter(inicio[1], -inicio[0], s=50)  # marca início
     plt.grid(True)
     plt.axis('equal')
     plt.show()
+
 
 
 
@@ -284,13 +316,14 @@ if __name__ == "__main__":
         exit()
 
     # CONFIGURAÇÕES DO AG
-    tamanho_populacao_cfg = 150
-    numero_geracoes_cfg = 400
+    tamanho_populacao_cfg = 100
+    numero_geracoes_cfg = 500
     elitismo_cfg = True
-    taxa_mutacao_cfg = 0.2
+    taxa_mutacao_cfg = 0.1
     metodo_crossover_cfg = 'order'
 
     inicio_tempo = time.time()
+    
 
     melhor, inicio, pontos_entregas, matriz, distancias = executar_ag(
         matriz_exemplo,
@@ -300,8 +333,9 @@ if __name__ == "__main__":
         taxa_mutacao_cfg,
         metodo_crossover_cfg
     )
-
     fim_tempo = time.time()
+
+   
     tempo = fim_tempo - inicio_tempo
 
     dist_total = -avaliacao(melhor,inicio,pontos_entregas)
@@ -316,5 +350,6 @@ if __name__ == "__main__":
 
     print("\nMelhor rota encontrada:", "-".join(melhor))
     print(f"Tempo de execução: {tempo:.4f} segundos")
+    print(f"Distância:{dist_total} Dronômetros")
 
     plotar_rota_ag(melhor, inicio, pontos_entregas, matriz)
