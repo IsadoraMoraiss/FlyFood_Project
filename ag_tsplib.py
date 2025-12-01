@@ -91,7 +91,7 @@ def cruzamento(pai1, pai2):# Cruzamento (Ordered Crossover - OX)
 
 
 # Mutação (troca de cidades)
-def mutacao(individuo, taxa=0.02):
+def mutacao(individuo, taxa=0.015):
     for i in range(len(individuo)):
         if random.random() < taxa:
             j = random.randint(0, len(individuo)-1)
@@ -101,21 +101,58 @@ def mutacao(individuo, taxa=0.02):
 
 
 
-def algoritmo_genetico(distancias, tamanho_pop=100, geracoes=300):
+def algoritmo_genetico(distancias, tamanho_pop=350, geracoes=1200):
+    if tamanho_pop <= 0:
+        raise ValueError("tamanho_pop deve ser >= 1 (ex.: 100, 300, 350).")
+    if geracoes <= 0:
+        raise ValueError("geracoes deve ser >= 1.")
+    
     n = len(distancias)
     populacao = criar_populacao(n, tamanho_pop)
 
     for _ in range(geracoes):
         pontuacoes = avaliar_populacao(populacao, distancias)
+        if not pontuacoes:
+            # caso extremo: recria população
+            populacao = criar_populacao(n, tamanho_pop)
+            pontuacoes = avaliar_populacao(populacao, distancias)
+
+        pontuacoes.sort(key=lambda x: x[1])
         nova_pop = []
+        if pontuacoes:
+            melhor_ind, _ = pontuacoes[0]
+            nova_pop.append(melhor_ind[:])
+            pontuacoes.pop(0)
+
+        while len(nova_pop) < tamanho_pop:
+            if not pontuacoes:
+                # se acabaram as pontuações, gerar indivíduos aleatórios para completar
+                faltam = tamanho_pop - len(nova_pop)
+                nova_pop.extend(criar_populacao(n, faltam))
+                break
+            k = min(5, len(pontuacoes))
+            selecionados = random.sample(pontuacoes, k)
+            selecionados.sort(key=lambda x: x[1])
+            escolhido = selecionados[0][0]
+            nova_pop.append(escolhido[:])
+
+            # remover o indivíduo selecionado da lista de pontuações (primeira ocorrência)
+            for i, (ind, dist) in enumerate(pontuacoes):
+                if ind == escolhido:
+                    pontuacoes.pop(i)
+                    break
+        filhos =[]
         for _ in range(tamanho_pop):
-            pai1 = selecao(pontuacoes)
-            pai2 = selecao(pontuacoes)
+            pai1 = random.choice(nova_pop)
+            pai2 = random.choice(nova_pop)
             filho = cruzamento(pai1, pai2)
-            mutacao(filho)
-            nova_pop.append(filho)
-        populacao += nova_pop
+            mutacao(filho, taxa=0.015)
+            filhos.append(filho)
+        populacao = nova_pop + filhos
         #criar uma nova populacao de sobreviventes
+
+        # Nova geração = sobreviventes + filhos
+       
         #transferir o melhor indivduo para ela
         #transferir o restante (tamanho_pop-1) usando o torneio
         #lembrete: apagar o individuo da populacao original apos transferi-lo
@@ -135,7 +172,7 @@ def main():
     distancias = ler_tsplib(arquivo)
 
     inicio = time.time()
-    rota, distancia = algoritmo_genetico(distancias, tamanho_pop=150, geracoes=400)
+    rota, distancia = algoritmo_genetico(distancias, tamanho_pop=900, geracoes=4000)
     fim = time.time()
 
     print("\nMelhor rota encontrada:", rota)

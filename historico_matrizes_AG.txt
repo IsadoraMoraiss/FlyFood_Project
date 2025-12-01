@@ -938,3 +938,32 @@ R 0 0 0 0 0 0 0 0 0 0
 Rota ótima: D - F - G - J - I - H - E - C - B - A
 Distância total: 40
 Tempo de execução: 0.710340 segundos
+
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+Rota ótima: B - C - D - A
+Distância total: 14
+Tempo de execução: 0.856247 segundos
+
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0
+---
+4 5
+0 0 0 0 D
+0 A 0 0 0
+0 0 0 0 C
+R 0 B 0 0

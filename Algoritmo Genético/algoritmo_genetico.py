@@ -68,9 +68,7 @@ def salvar_matriz(caminho="historico_matrizes_AG.txt"):
 
 def salvar_historico_ag(matriz_texto: str, rota, distancia_total, tempo_execucao,
                         caminho="historico_matrizes_AG.txt"):
-    """
-    Salva a matriz, rota ótima, distância e tempo no arquivo de histórico.
-    """
+    
     
     with open(caminho, "a", encoding="utf-8") as f:
         f.write("\n---\n")
